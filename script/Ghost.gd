@@ -4,6 +4,8 @@ const SPEED = 5.0
 @export var material : ORMMaterial3D
 @export var light : OmniLight3D
 
+var isVisible = false
+
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -22,10 +24,12 @@ func GhostVisible():
 	material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 	material.albedo_color.a = 1
 	light.light_energy = 2
+	isVisible = true
 	#light.light_color = "red"
 	
 func GhostInvisible():
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.albedo_color.a = 0.5
 	light.light_energy = 1
+	isVisible = false
 	#light.light_color = "white"

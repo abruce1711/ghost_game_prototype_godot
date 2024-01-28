@@ -7,7 +7,7 @@ var distanceToGhost : float
 var distanceToMouse : float
 var mousePos : Vector3
 
-@onready var ghost : Ghost = get_parent().get_node("ghost")
+@onready var ghost : Ghost = get_parent().get_node("Ghost")
 
 func Process(delta : float):
 	mousePos = MousePosition()

@@ -3,10 +3,12 @@ class_name HumanIdleState
 
 @export var human : CharacterBody3D
 @export  var moveSpeed := 1.0
+@export var rayCast : RayCast3D
 @onready var smooth_dir = human.position
 
 var moveDirection : Vector3
 var wanderTime : float
+var distanceToWall : float
 
 func RandomizeWander():
 	moveDirection = Vector3(randf_range(-1, 1), 0, 0).normalized()
@@ -20,6 +22,13 @@ func Update(delta : float):
 		wanderTime -= delta
 	else:
 		RandomizeWander()
+	
+	if !rayCast.is_colliding() || !rayCast.get_collider() is StaticBody3D:
+		return
+		
+	distanceToWall = human.global_position.distance_to(rayCast.get_collision_point())
+	if distanceToWall < 2:
+		moveDirection.x *= -1
 		
 func PhysicsUpdate(delta : float):
 	if human:
