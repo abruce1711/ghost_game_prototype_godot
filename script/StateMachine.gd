@@ -1,6 +1,7 @@
 extends Node
 
 @export var initialState : State
+@export var rayCast : RayCast3D
 
 var currentState : State
 var states : Dictionary = {}
@@ -36,4 +37,8 @@ func onChildTransition(state, newStateName):
 		return
 	
 	if currentState:
-		currentState.exit()
+		currentState.Exit()
+	
+	newState.Enter()
+	
+	currentState = newState

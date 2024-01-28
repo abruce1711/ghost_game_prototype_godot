@@ -10,14 +10,15 @@ radius = 0.3
 height = 0.6
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_c2dvp"]
-radius = 0.3
+radius = 0.4
 
-[node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("light")]
+[node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("light", "hitBox")]
 collision_mask = 0
 axis_lock_linear_z = true
 script = ExtResource("1_qxfol")
 material = ExtResource("1_fedre")
 light = NodePath("OmniLight3D")
+hitBox = NodePath("Hitbox")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_jqjw6")

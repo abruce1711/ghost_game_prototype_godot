@@ -3,6 +3,7 @@ class_name Ghost
 const SPEED = 5.0
 @export var material : ORMMaterial3D
 @export var light : OmniLight3D
+@export var hitBox : HitboxComponent
 
 var isVisible = false
 
@@ -24,12 +25,12 @@ func GhostVisible():
 	material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 	material.albedo_color.a = 1
 	light.light_energy = 2
-	isVisible = true
+	hitBox.isScary = true
 	#light.light_color = "red"
 	
 func GhostInvisible():
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.albedo_color.a = 0.5
 	light.light_energy = 1
-	isVisible = false
+	hitBox.isScary = false
 	#light.light_color = "white"

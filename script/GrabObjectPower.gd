@@ -6,6 +6,7 @@ var grabbedPos
 var bobbingUp
 
 @export  var light : Light3D
+@export var hitbox : HitboxComponent
 
 func _process(delta):
 	## Call base process
@@ -35,12 +36,14 @@ func Grab():
 	grabbedPos = self.position
 	light.light_energy = 1
 	grabbed = true
+	hitbox.isScary = true
 	print_debug("grabbed")
 
 func Release():
 	self.gravity_scale = 1
 	light.light_energy = 0
 	grabbed = false
+	hitbox.isScary = false
 	print_debug("released")
 	
 func MoveToForeground(delta : float):
