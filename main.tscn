@@ -1,0 +1,147 @@
+[gd_scene load_steps=14 format=3 uid="uid://credxemjm0dii"]
+
+[ext_resource type="PackedScene" uid="uid://bys0q5dkl3nvw" path="res://scenes/ghost.tscn" id="2_7gmcw"]
+[ext_resource type="Script" path="res://script/Ghost.gd" id="2_oqnni"]
+[ext_resource type="PackedScene" uid="uid://dl5lln60fuu5b" path="res://scenes/internal_floor_tile.tscn" id="3_7r0yh"]
+[ext_resource type="Material" uid="uid://coc753osrfi1v" path="res://materials/ghost.tres" id="3_soua6"]
+[ext_resource type="PackedScene" uid="uid://cjwd5n3neypel" path="res://scenes/internal_wall_tile.tscn" id="4_0dkcr"]
+[ext_resource type="PackedScene" uid="uid://b6mgxrfpurmvk" path="res://scenes/external_horizontal_tile.tscn" id="5_c3b7v"]
+[ext_resource type="PackedScene" uid="uid://mejcu8sdtgv5" path="res://scenes/external_wall_tile.tscn" id="6_8amq4"]
+[ext_resource type="PackedScene" uid="uid://6f48npuiahhj" path="res://scenes/backWall.tscn" id="7_cprya"]
+[ext_resource type="PackedScene" uid="uid://c2q2qsfgcepdm" path="res://scenes/human.tscn" id="11_7376c"]
+[ext_resource type="PackedScene" uid="uid://3xmdc7bmvvb7" path="res://scenes/box.tscn" id="11_h105f"]
+[ext_resource type="Script" path="res://script/Human.gd" id="12_hv6i6"]
+[ext_resource type="Script" path="res://script/StateMachine.gd" id="13_f4j45"]
+[ext_resource type="Script" path="res://script/HumanIdleState.gd" id="14_eokpy"]
+
+[node name="main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.152779, 0.98826, 0, -0.98826, 0.152779, 16.9884, 22.5371, 0)
+
+[node name="ghost" parent="." node_paths=PackedStringArray("light") instance=ExtResource("2_7gmcw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3167, 0)
+collision_mask = 4
+script = ExtResource("2_oqnni")
+material = ExtResource("3_soua6")
+light = NodePath("OmniLight3D")
+
+[node name="Camera3D" type="Camera3D" parent="ghost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.24763, 8.76863)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ghost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.307762, 0)
+
+[node name="Map" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -5, 4.95, 0)
+
+[node name="Internal" type="Node3D" parent="Map"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -4.95, -5, 0)
+
+[node name="InternalFloorTile" parent="Map/Internal" instance=ExtResource("3_7r0yh")]
+collision_mask = 0
+
+[node name="InternalWallTile" parent="Map/Internal" instance=ExtResource("4_0dkcr")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 5, 6.5, 0)
+collision_mask = 0
+
+[node name="InternalFloorTile2" parent="Map/Internal" instance=ExtResource("3_7r0yh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+collision_mask = 0
+
+[node name="InternalFloorTile3" parent="Map/Internal" instance=ExtResource("3_7r0yh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+collision_mask = 0
+
+[node name="InternalFloorTile4" parent="Map/Internal" instance=ExtResource("3_7r0yh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0)
+collision_mask = 0
+
+[node name="InternalWallTile2" parent="Map/Internal" instance=ExtResource("4_0dkcr")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 15, 6.5, 0)
+collision_mask = 0
+
+[node name="InternalWallTile3" parent="Map/Internal" instance=ExtResource("4_0dkcr")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 25, 6.5, 0)
+collision_mask = 0
+
+[node name="InternalWallTile4" parent="Map/Internal" instance=ExtResource("4_0dkcr")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 5, -3.5, 0)
+collision_mask = 0
+
+[node name="InternalWallTile5" parent="Map/Internal" instance=ExtResource("4_0dkcr")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 15, -3.5, 0)
+collision_mask = 0
+
+[node name="InternalWallTile6" parent="Map/Internal" instance=ExtResource("4_0dkcr")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 25, -3.5, 0)
+collision_mask = 0
+
+[node name="External" type="Node3D" parent="Map"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -4.95, -5, 0)
+
+[node name="ExternalWallTile" parent="Map/External" instance=ExtResource("6_8amq4")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -5, 4.95, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+collision_mask = 0
+
+[node name="ExternalWallTile2" parent="Map/External" instance=ExtResource("6_8amq4")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 35, 4.95, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile2" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 10, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile3" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 10, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile4" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 10, 0)
+collision_mask = 0
+
+[node name="ExternalWallTile3" parent="Map/External" instance=ExtResource("6_8amq4")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -5, -5, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile5" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+collision_mask = 0
+
+[node name="ExternalWallTile4" parent="Map/External" instance=ExtResource("6_8amq4")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 35, -5, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile6" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -10, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile7" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -10, 0)
+collision_mask = 0
+
+[node name="ExternalHorizontalTile8" parent="Map/External" instance=ExtResource("5_c3b7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -10, 0)
+collision_mask = 0
+
+[node name="backWall" parent="Map/External" instance=ExtResource("7_cprya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2028, -1.32009, -2.85604)
+
+[node name="Human" parent="." instance=ExtResource("11_7376c")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.75403, 1.58804, 0)
+script = ExtResource("12_hv6i6")
+
+[node name="StateMachine" type="Node" parent="Human" node_paths=PackedStringArray("initialState")]
+script = ExtResource("13_f4j45")
+initialState = NodePath("HumanIdleState")
+
+[node name="HumanIdleState" type="Node" parent="Human/StateMachine" node_paths=PackedStringArray("human")]
+script = ExtResource("14_eokpy")
+human = NodePath("../..")
+
+[node name="Box" parent="." instance=ExtResource("11_h105f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57019, 0.924527, -1)

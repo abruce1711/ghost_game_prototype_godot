@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjwd5n3neypel"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1vphc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wtc5k"]
+size = Vector3(7, 0.1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eb3ec"]
+size = Vector3(7, 0.1, 5)
+
+[node name="InternalWallTile" type="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 2
+collision_mask = 24
+physics_material_override = SubResource("PhysicsMaterial_1vphc")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wtc5k")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_eb3ec")
