@@ -7,7 +7,7 @@ const SPEED = 5.0
 
 var isVisible = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "down", "up")
@@ -26,11 +26,9 @@ func GhostVisible():
 	material.albedo_color.a = 1
 	light.light_energy = 2
 	hitBox.isScary = true
-	#light.light_color = "red"
 	
 func GhostInvisible():
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.albedo_color.a = 0.5
 	light.light_energy = 1
 	hitBox.isScary = false
-	#light.light_color = "white"

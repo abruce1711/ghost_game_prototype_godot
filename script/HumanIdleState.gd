@@ -8,6 +8,7 @@ const MAX_FEAR = 100
 @export  var moveSpeed := 1.0
 @export var rayCast : RayCast3D
 @export var FEAR_JUMP := 1.0
+@export var fearBar : ProgressBar3D
 @onready var smooth_dir = human.position
 
 var moveDirection : Vector3
@@ -15,6 +16,7 @@ var wanderTime : float
 var distanceToWall : float
 var fearLevel := 0.0
 var turnTimer = 0
+var fearRising := false
 
 func RandomizeWander():
 	moveDirection = Vector3(randf_range(-1, 1), 0, 0).normalized()
@@ -34,7 +36,11 @@ func PhysicsUpdate(delta : float):
 		human.velocity = moveDirection * moveSpeed
 		human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)
 
+	if !fearRising:
+		DecreaseFear()
+
 	if !rayCast.is_colliding():
+		fearRising = false
 		return
 	
 	CheckGhostCollision()
@@ -51,22 +57,27 @@ func PhysicsUpdate(delta : float):
 		
 func CheckGhostCollision():
 	var collision = rayCast.get_collider()
-	
-	if (collision is HitboxComponent
-	&& (collision as HitboxComponent).isScary):
+
+	if (collision is HitboxComponent &&
+	(collision as HitboxComponent).isScary):
 		IncreaseFear()
-	else:
-		DecreaseFear()
+	elif (fearRising):
+		fearRising = false
 	
 func IncreaseFear():
 	if fearLevel >= MAX_FEAR:
 		Transitioned.emit(self, "scared")
 		return
 		
+	if !fearRising:
+		fearRising = true
+		
 	fearLevel += FEAR_JUMP
+	fearBar.SetValue(fearLevel)
 	
 func DecreaseFear():
 	if fearLevel > MIN_FEAR && fearLevel < MAX_FEAR:
 		fearLevel -= FEAR_JUMP/2
+		fearBar.SetValue(fearLevel)
 			
 		

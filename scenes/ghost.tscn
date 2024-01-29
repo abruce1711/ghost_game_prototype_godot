@@ -4,30 +4,31 @@
 [ext_resource type="Script" path="res://script/Ghost.gd" id="1_qxfol"]
 [ext_resource type="Script" path="res://script/HitboxComponent.gd" id="3_31fjl"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_c2dvp"]
+radius = 0.4
+
 [sub_resource type="SphereMesh" id="SphereMesh_jqjw6"]
 material = ExtResource("1_fedre")
 radius = 0.3
 height = 0.6
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_c2dvp"]
-radius = 0.4
-
 [node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("light", "hitBox")]
-collision_mask = 0
+collision_mask = 4
 axis_lock_linear_z = true
 script = ExtResource("1_qxfol")
 material = ExtResource("1_fedre")
 light = NodePath("OmniLight3D")
 hitBox = NodePath("Hitbox")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_jqjw6")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_c2dvp")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_jqjw6")
+
 [node name="Hitbox" type="Area3D" parent="."]
-collision_mask = 16
+collision_layer = 64
+collision_mask = 20
 script = ExtResource("3_31fjl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]

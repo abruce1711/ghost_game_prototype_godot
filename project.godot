@@ -55,6 +55,7 @@ power={
 3d_physics/layer_4="objects"
 3d_physics/layer_5="humans"
 3d_physics/layer_6="exit_doors"
+3d_physics/layer_7="ghost_hitbox"
 
 [physics]
 

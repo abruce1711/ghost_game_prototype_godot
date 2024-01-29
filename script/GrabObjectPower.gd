@@ -14,6 +14,7 @@ func _process(delta):
 	
 	## Check if object is stuck on wall
 	if (activated && distanceToGhost > 10 && self.get_contact_count() > 0):
+		hitbox.isScary = false
 		activated = false
 
 func _physics_process(delta):
@@ -37,14 +38,12 @@ func Grab():
 	light.light_energy = 1
 	grabbed = true
 	hitbox.isScary = true
-	print_debug("grabbed")
 
 func Release():
 	self.gravity_scale = 1
 	light.light_energy = 0
 	grabbed = false
 	hitbox.isScary = false
-	print_debug("released")
 	
 func MoveToForeground(delta : float):
 	if self.position.z < 0:
@@ -56,5 +55,5 @@ func MoveToBackground(delta : float):
 
 func _on_area_3d_area_entered(area):
 	if area is HitboxComponent:
-		var hitbox : HitboxComponent = area
-		hitbox.Damage(5.0)
+		var areaHitbox : HitboxComponent = area
+		areaHitbox.Damage(25)

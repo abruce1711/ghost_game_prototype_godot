@@ -7,7 +7,9 @@ class_name HumanScaredState
 var moveDirection : Vector3
 
 func Enter():
-	text.text = "ahhh !!!"
+	if text:
+		text.text = "ahhh !!!"
+		
 	moveDirection = (exitDoor.global_position - human.global_position).normalized()
 	human.axis_lock_linear_z = false
 	
