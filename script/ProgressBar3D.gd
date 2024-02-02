@@ -4,10 +4,11 @@ class_name ProgressBar3D
 @export var bar : ProgressBar
 @export var initialValue := 100.0
 @export var styleBox : StyleBoxFlat
+@export var subViewPort : SubViewport
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	texture = $SubViewport.get_texture()
+	texture = subViewPort.get_texture()
 	SetValue(initialValue)
 	SetStyleBox(styleBox)
 

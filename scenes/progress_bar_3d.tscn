@@ -8,11 +8,12 @@ viewport_path = NodePath("SubViewport")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_31b42"]
 bg_color = Color(1, 0, 0, 1)
 
-[node name="ProgressBar3D" type="Sprite3D" node_paths=PackedStringArray("bar")]
+[node name="ProgressBar3D" type="Sprite3D" node_paths=PackedStringArray("bar", "subViewPort")]
 billboard = 1
 texture = SubResource("ViewportTexture_axep4")
 script = ExtResource("1_2uc0x")
 bar = NodePath("SubViewport/ProgressBar")
+subViewPort = NodePath("SubViewport")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(100, 15)

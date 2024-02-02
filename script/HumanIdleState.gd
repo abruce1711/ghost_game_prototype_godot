@@ -58,6 +58,9 @@ func PhysicsUpdate(delta : float):
 func CheckGhostCollision():
 	var collision = rayCast.get_collider()
 
+	if collision is Power:
+		print_debug((collision as Power).fearValue)
+	
 	if (collision is HitboxComponent &&
 	(collision as HitboxComponent).isScary):
 		IncreaseFear()

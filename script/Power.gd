@@ -6,18 +6,25 @@ var activated : bool = false
 var distanceToGhost : float
 var distanceToMouse : float
 var mousePos : Vector3
+var fearValue := 10.0
+var powerTimer = 0
 
 @onready var ghost : Ghost = get_parent().get_node("Ghost")
 
 func Process(_delta : float):
+	if powerTimer > 0:
+		powerTimer -= _delta
+		
 	mousePos = MousePosition()
 	distanceToMouse = self.global_position.distance_to(mousePos)
 	distanceToGhost = self.global_position.distance_to(ghost.global_position)
 	
 func _input(event):
-	if (event.is_action_pressed("power") && distanceToGhost < 5 && distanceToMouse < 1 && !activated):
+	if (event.is_action_pressed("power") && distanceToGhost < 5 && distanceToMouse < 1 && !activated && powerTimer <= 0):
+		powerTimer = 0.1
 		activated = true
-	elif (event.is_action_pressed("power") && activated):
+	elif (event.is_action_pressed("power") && activated && powerTimer <= 0):
+		powerTimer = 0.1
 		activated = false
 
 func MousePosition():

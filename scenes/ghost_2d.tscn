@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbykews3mjrl6"]
+
+[ext_resource type="Script" path="res://script/Ghost_2d.gd" id="1_umkl1"]
+[ext_resource type="Script" path="res://script/HitboxComponent.gd" id="3_0lcsh"]
+[ext_resource type="Texture2D" uid="uid://cpebkvnsc5fwt" path="res://images/ghostIcon.png" id="3_xpcic"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_db8ur"]
+size = Vector3(0.3, 0.4, 0.3)
+
+[node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("sprite", "light", "hitBox")]
+collision_mask = 4
+axis_lock_linear_z = true
+script = ExtResource("1_umkl1")
+sprite = NodePath("Sprite3D")
+light = NodePath("OmniLight3D")
+hitBox = NodePath("Hitbox")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+pixel_size = 0.002
+billboard = 1
+texture = ExtResource("3_xpcic")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_db8ur")
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 64
+collision_mask = 20
+script = ExtResource("3_0lcsh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("BoxShape3D_db8ur")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24763, 2.05562)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.307762, 0)

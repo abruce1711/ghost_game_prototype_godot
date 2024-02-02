@@ -19,6 +19,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	if (activated && !grabbed):
+		print_debug("should grab")
 		Grab()
 	elif (!activated && grabbed):
 		Release()
