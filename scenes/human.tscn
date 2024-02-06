@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c2q2qsfgcepdm"]
+[gd_scene load_steps=23 format=3 uid="uid://c2q2qsfgcepdm"]
 
 [ext_resource type="Script" path="res://script/HealthComponent.gd" id="1_7afgr"]
 [ext_resource type="Script" path="res://script/Human.gd" id="1_kv0x8"]
@@ -11,6 +11,8 @@
 [ext_resource type="StyleBox" uid="uid://bq34wo7s0f42x" path="res://scenes/flat_fear_style_box.tres" id="8_dg1w8"]
 [ext_resource type="StyleBox" uid="uid://bf6aidr76cgva" path="res://scenes/flat_health_style_box.tres" id="8_uoemp"]
 [ext_resource type="Texture2D" uid="uid://cpebkvnsc5fwt" path="res://images/ghostIcon.png" id="11_vvdhn"]
+[ext_resource type="Script" path="res://script/SightComponent.gd" id="12_3rj52"]
+[ext_resource type="Script" path="res://script/FearComponent.gd" id="13_x07xa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ffojb"]
 radius = 0.4
@@ -105,11 +107,9 @@ shape = SubResource("CylinderShape3D_exivy")
 script = ExtResource("4_2k0ik")
 initialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("human", "rayCast", "fearBar")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("human")]
 script = ExtResource("5_du427")
 human = NodePath("../..")
-rayCast = NodePath("../../Head/RayCast3D")
-fearBar = NodePath("../../FearBar")
 
 [node name="Scared" type="Node" parent="StateMachine" node_paths=PackedStringArray("human")]
 script = ExtResource("6_5qfx3")
@@ -137,3 +137,15 @@ offset = Vector2(-350, 0)
 pixel_size = 0.002
 billboard = 1
 texture = ExtResource("11_vvdhn")
+
+[node name="SightComponent" type="Node3D" parent="." node_paths=PackedStringArray("rayCast")]
+script = ExtResource("12_3rj52")
+rayCast = NodePath("../Head/RayCast3D")
+
+[node name="FearComponent" type="Node3D" parent="." node_paths=PackedStringArray("fearBar")]
+script = ExtResource("13_x07xa")
+fearBar = NodePath("../FearBar")
+
+[connection signal="canSeePower" from="SightComponent" to="FearComponent" method="_on_sight_component_can_see_power"]
+[connection signal="nearWall" from="SightComponent" to="StateMachine/Idle" method="_on_sight_component_near_wall"]
+[connection signal="scared" from="FearComponent" to="StateMachine/Idle" method="_on_fear_component_scared"]
