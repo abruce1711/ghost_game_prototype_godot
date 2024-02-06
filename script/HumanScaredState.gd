@@ -5,6 +5,7 @@ class_name HumanScaredState
 @export var human : Human
 @export var exitDoor : Door
 var moveDirection : Vector3
+var movementSpeed := 5.0
 
 func Enter():
 	if text:
@@ -21,5 +22,5 @@ func Update(_delta: float):
 	
 func PhysicsUpdate(_delta: float):
 	if human:
-		human.velocity = moveDirection * 3
+		human.velocity = moveDirection * movementSpeed
 		human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)

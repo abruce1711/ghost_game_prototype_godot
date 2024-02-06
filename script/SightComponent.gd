@@ -25,11 +25,11 @@ func _physics_process(delta):
 	var collision = rayCast.get_collider()
 	
 	if collision is Power:
-		# send signal to inflict fear and/or suspicion
-		if powerTimer <= 0:
-			powerTimer = 10
-			var fearVal = (collision as Power).fearValue
-			canSeePower.emit(fearVal)
+		var power = (collision as Power)
+		
+		if powerTimer <= 0 && power.activated:
+			powerTimer = 5
+			canSeePower.emit(power.fearValue)
 		return
 		
 	if collision is StaticBody3D:

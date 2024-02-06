@@ -1,18 +1,21 @@
-[gd_scene load_steps=23 format=3 uid="uid://c2q2qsfgcepdm"]
+[gd_scene load_steps=26 format=3 uid="uid://c2q2qsfgcepdm"]
 
 [ext_resource type="Script" path="res://script/HealthComponent.gd" id="1_7afgr"]
 [ext_resource type="Script" path="res://script/Human.gd" id="1_kv0x8"]
 [ext_resource type="Script" path="res://script/HitboxComponent.gd" id="2_lqfi6"]
 [ext_resource type="Script" path="res://script/StateMachine.gd" id="4_2k0ik"]
+[ext_resource type="Script" path="res://script/Head.gd" id="4_dwvc1"]
 [ext_resource type="Script" path="res://script/HumanIdleState.gd" id="5_du427"]
 [ext_resource type="Script" path="res://script/HumanScaredState.gd" id="6_5qfx3"]
 [ext_resource type="PackedScene" uid="uid://cs0odfmfb1okd" path="res://scenes/progress_bar_3d.tscn" id="7_mjg5w"]
+[ext_resource type="Script" path="res://script/HumanSuspiciousState.gd" id="7_r1dng"]
 [ext_resource type="Texture2D" uid="uid://cgkeymjlh78e2" path="res://images/heart pixel art 32x32.png" id="8_15vcx"]
 [ext_resource type="StyleBox" uid="uid://bq34wo7s0f42x" path="res://scenes/flat_fear_style_box.tres" id="8_dg1w8"]
 [ext_resource type="StyleBox" uid="uid://bf6aidr76cgva" path="res://scenes/flat_health_style_box.tres" id="8_uoemp"]
 [ext_resource type="Texture2D" uid="uid://cpebkvnsc5fwt" path="res://images/ghostIcon.png" id="11_vvdhn"]
 [ext_resource type="Script" path="res://script/SightComponent.gd" id="12_3rj52"]
 [ext_resource type="Script" path="res://script/FearComponent.gd" id="13_x07xa"]
+[ext_resource type="Script" path="res://script/SuspicionComponent.gd" id="14_yyr1m"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ffojb"]
 radius = 0.4
@@ -79,6 +82,7 @@ shape = SubResource("CylinderShape3D_68rha")
 [node name="Head" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.798623, 0)
 mesh = SubResource("SphereMesh_ybo7m")
+script = ExtResource("4_dwvc1")
 
 [node name="RayCast3D" type="RayCast3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0388213, -0.410589)
@@ -111,9 +115,15 @@ initialState = NodePath("Idle")
 script = ExtResource("5_du427")
 human = NodePath("../..")
 
-[node name="Scared" type="Node" parent="StateMachine" node_paths=PackedStringArray("human")]
+[node name="Scared" type="Node" parent="StateMachine" node_paths=PackedStringArray("text", "human")]
 script = ExtResource("6_5qfx3")
+text = NodePath("../../Label3D")
 human = NodePath("../..")
+
+[node name="Suspicious" type="Node" parent="StateMachine" node_paths=PackedStringArray("human", "text")]
+script = ExtResource("7_r1dng")
+human = NodePath("../..")
+text = NodePath("../../Label3D")
 
 [node name="HealthBar" parent="." instance=ExtResource("7_mjg5w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24372, 0)
@@ -146,6 +156,22 @@ rayCast = NodePath("../Head/RayCast3D")
 script = ExtResource("13_x07xa")
 fearBar = NodePath("../FearBar")
 
+[node name="SuspicionComponent" type="Node3D" parent="." node_paths=PackedStringArray("fearComponent")]
+script = ExtResource("14_yyr1m")
+fearComponent = NodePath("../FearComponent")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91189, -0.0150942)
+billboard = 1
+font_size = 80
+
+[connection signal="wasHit" from="Hitbox" to="FearComponent" method="_on_hitbox_was_hit"]
+[connection signal="wasHit" from="Hitbox" to="SuspicionComponent" method="_on_hitbox_was_hit"]
 [connection signal="canSeePower" from="SightComponent" to="FearComponent" method="_on_sight_component_can_see_power"]
+[connection signal="canSeePower" from="SightComponent" to="SuspicionComponent" method="_on_sight_component_can_see_power"]
 [connection signal="nearWall" from="SightComponent" to="StateMachine/Idle" method="_on_sight_component_near_wall"]
+[connection signal="nearWall" from="SightComponent" to="StateMachine/Suspicious" method="_on_sight_component_near_wall"]
 [connection signal="scared" from="FearComponent" to="StateMachine/Idle" method="_on_fear_component_scared"]
+[connection signal="scared" from="FearComponent" to="StateMachine/Suspicious" method="_on_fear_component_scared"]
+[connection signal="suspicious" from="SuspicionComponent" to="StateMachine/Idle" method="_on_suspicion_component_suspicious"]
+[connection signal="suspicious" from="SuspicionComponent" to="StateMachine/Suspicious" method="_on_suspicion_component_suspicious"]

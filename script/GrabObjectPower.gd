@@ -19,7 +19,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	if (activated && !grabbed):
-		print_debug("should grab")
 		Grab()
 	elif (!activated && grabbed):
 		Release()
@@ -55,6 +54,6 @@ func MoveToBackground(delta : float):
 			self.position.z -= delta/2
 
 func _on_area_3d_area_entered(area):
-	if area is HitboxComponent:
+	if area is HitboxComponent && linear_velocity.length() > 1.0:
 		var areaHitbox : HitboxComponent = area
 		areaHitbox.Damage(25)

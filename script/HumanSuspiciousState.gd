@@ -1,17 +1,23 @@
 extends State
-class_name HumanIdleState
+class_name HumanSuspiciousState
 
 @export var human : CharacterBody3D
-@export  var moveSpeed := 1.0
+@export  var moveSpeed := 3.0
+@export var text : Label3D
 
 var moveDirection : Vector3
 var wanderTime : float
+var suspicionTimer := 0.0
+
 
 func RandomizeWander():
 	moveDirection = Vector3(randf_range(-1, 1), 0, 0).normalized()
-	wanderTime = randf_range(30, 100)
+	wanderTime = randf_range(5, 10)
 	
 func Enter():
+	suspicionTimer = 10
+	if text:
+		text.text = "??"
 	RandomizeWander()
 	
 func Update(delta : float):
@@ -19,6 +25,13 @@ func Update(delta : float):
 		wanderTime -= delta
 	else:
 		RandomizeWander()
+		
+	if suspicionTimer > 0:
+		suspicionTimer -= delta
+		print_debug("sus timer: %s" % suspicionTimer)
+	else:
+		text.text = ""
+		Transitioned.emit(self, "idle")
 		
 func PhysicsUpdate(_delta : float):
 	if human:
@@ -33,5 +46,6 @@ func _on_sight_component_near_wall():
 func _on_fear_component_scared():
 	Transitioned.emit(self, "scared")
 
+
 func _on_suspicion_component_suspicious():
-	Transitioned.emit(self, "suspicious")
+	suspicionTimer = 10
