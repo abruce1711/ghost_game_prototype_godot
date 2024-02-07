@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://credxemjm0dii"]
+[gd_scene load_steps=10 format=3 uid="uid://credxemjm0dii"]
 
 [ext_resource type="PackedScene" uid="uid://dl5lln60fuu5b" path="res://scenes/internal_floor_tile.tscn" id="3_7r0yh"]
 [ext_resource type="PackedScene" uid="uid://cjwd5n3neypel" path="res://scenes/internal_wall_tile.tscn" id="4_0dkcr"]
@@ -10,13 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c2q2qsfgcepdm" path="res://scenes/human.tscn" id="11_7376c"]
 [ext_resource type="PackedScene" uid="uid://3xmdc7bmvvb7" path="res://scenes/box.tscn" id="11_h105f"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ftpct"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_shj73"]
-viewport_path = NodePath("SubViewport")
-
-[node name="main" type="Node3D"]
+[node name="main" type="Node3D" groups=["listeners", "sounds"]]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.152779, 0.98826, 0, -0.98826, 0.152779, 16.9884, 22.5371, 0)
@@ -123,22 +117,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2028, -1.32009, -2.85604)
 [node name="Human" parent="." instance=ExtResource("11_7376c")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18.4978, -7.08935, 0)
 
-[node name="Scared" parent="Human/StateMachine" index="1" node_paths=PackedStringArray("exitDoor")]
-exitDoor = NodePath("../../../Door")
-
-[node name="HealthBar" parent="Human" index="9"]
-texture = SubResource("ViewportTexture_ftpct")
-
-[node name="FearBar" parent="Human" index="10"]
-texture = SubResource("ViewportTexture_shj73")
-
 [node name="Door" parent="." instance=ExtResource("6_n03jy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.2912, -8.99283, -2.53465)
 
 [node name="Ghost" parent="." instance=ExtResource("9_4bme2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.37612, 0)
 
-[node name="Box" parent="." instance=ExtResource("11_h105f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -7, 0)
-
-[editable path="Human"]
+[node name="Box" parent="." node_paths=PackedStringArray("light", "hitbox", "soundComponent") instance=ExtResource("11_h105f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.35509, 0)
+light = NodePath("OmniLight3D")
+hitbox = NodePath("Hitbox")
+soundComponent = NodePath("SoundComponent")

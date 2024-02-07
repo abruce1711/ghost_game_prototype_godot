@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 class_name FearComponent
 
 const MIN_FEAR = 0
@@ -18,7 +18,7 @@ func _on_sight_component_can_see_power(fear : float, _suspicionLevel : float):
 		scared.emit()
 
 
-func _on_hitbox_was_hit():
+func _on_hitbox_was_hit(_object : Node3D):
 	fearLevel += 20
 	fearBar.SetValue(fearLevel)
 	

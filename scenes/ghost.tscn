@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bys0q5dkl3nvw"]
 
 [ext_resource type="Material" uid="uid://coc753osrfi1v" path="res://materials/ghost.tres" id="1_fedre"]
-[ext_resource type="Script" path="res://script/Ghost.gd" id="1_qxfol"]
-[ext_resource type="Script" path="res://script/HitboxComponent.gd" id="3_31fjl"]
+[ext_resource type="Script" path="res://script/Characters/ghost.gd" id="1_qxfol"]
+[ext_resource type="Script" path="res://script/Components/hitbox_component.gd" id="3_31fjl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_c2dvp"]
 radius = 0.4

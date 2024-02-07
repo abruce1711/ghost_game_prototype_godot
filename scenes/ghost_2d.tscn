@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dbykews3mjrl6"]
 
-[ext_resource type="Script" path="res://script/Ghost_2d.gd" id="1_umkl1"]
-[ext_resource type="Script" path="res://script/HitboxComponent.gd" id="3_0lcsh"]
+[ext_resource type="Script" path="res://script/Misc/ghost_2d.gd" id="1_umkl1"]
+[ext_resource type="Script" path="res://script/Components/hitbox_component.gd" id="3_0lcsh"]
 [ext_resource type="Texture2D" uid="uid://cpebkvnsc5fwt" path="res://images/ghostIcon.png" id="3_xpcic"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_db8ur"]
