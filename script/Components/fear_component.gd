@@ -23,7 +23,7 @@ func HitWithObject():
 		scared.emit()
 
 func HeardNoise():
-	SetFear(100)
+	SetFear(10)
 
 
 func SetFear(fear : float):
