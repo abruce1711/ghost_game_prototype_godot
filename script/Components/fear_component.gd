@@ -10,16 +10,24 @@ signal scared
 
 var fearLevel := 0.0
 
-func _on_sight_component_can_see_power(fear : float, _suspicionLevel : float):
-	fearLevel += fear
+func _on_sight_component_can_see_power(fear : float, _power):
+	SetFear(fear)
+
+
+func HitWithObject():
+	print_debug("hit with object")
+	fearLevel += 30
 	fearBar.SetValue(fearLevel)
 	
 	if fearLevel >= MAX_FEAR:
 		scared.emit()
 
+func HeardNoise():
+	SetFear(100)
 
-func _on_hitbox_was_hit(_object : Node3D):
-	fearLevel += 20
+
+func SetFear(fear : float):
+	fearLevel += fear
 	fearBar.SetValue(fearLevel)
 	
 	if fearLevel >= MAX_FEAR:

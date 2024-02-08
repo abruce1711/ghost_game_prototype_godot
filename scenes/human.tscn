@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c2q2qsfgcepdm"]
+[gd_scene load_steps=28 format=3 uid="uid://c2q2qsfgcepdm"]
 
 [ext_resource type="Script" path="res://script/Components/health_component.gd" id="1_7afgr"]
 [ext_resource type="Script" path="res://script/Characters/human.gd" id="1_kv0x8"]
@@ -40,6 +40,9 @@ top_radius = 0.05
 bottom_radius = 0.05
 height = 0.1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_xcilg"]
+size = Vector3(1, 1, 20)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_pxbg8"]
 radius = 0.25
 
@@ -55,7 +58,7 @@ viewport_path = NodePath("SubViewport")
 
 [node name="Human" type="CharacterBody3D"]
 collision_layer = 8
-collision_mask = 14
+collision_mask = 270
 axis_lock_linear_z = true
 slide_on_ceiling = false
 script = ExtResource("1_kv0x8")
@@ -64,11 +67,13 @@ script = ExtResource("1_kv0x8")
 script = ExtResource("1_7afgr")
 healthBar = NodePath("../HealthBar")
 
-[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("healthComponent")]
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("suspicionComponent", "healthComponent", "fearComponent")]
 collision_layer = 16
 collision_mask = 9
 script = ExtResource("2_lqfi6")
+suspicionComponent = NodePath("../SuspicionComponent")
 healthComponent = NodePath("../HealthComponent")
+fearComponent = NodePath("../FearComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.209626, 0)
@@ -98,6 +103,14 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0124
 mesh = SubResource("CylinderMesh_rv4sy")
 skeleton = NodePath("../..")
 
+[node name="Sight" type="Area3D" parent="Head"]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Sight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.281029, -10.2466)
+shape = SubResource("BoxShape3D_xcilg")
+
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00612593, 0.811755, 0)
 shape = SubResource("SphereShape3D_pxbg8")
@@ -125,7 +138,6 @@ human = NodePath("../..")
 [node name="Suspicious" type="Node" parent="StateMachine" node_paths=PackedStringArray("human", "text", "head")]
 script = ExtResource("7_r1dng")
 human = NodePath("../..")
-moveSpeed = null
 text = NodePath("../../Label3D")
 head = NodePath("../../Head")
 
@@ -160,9 +172,8 @@ rayCast = NodePath("../Head/RayCast3D")
 script = ExtResource("13_x07xa")
 fearBar = NodePath("../FearBar")
 
-[node name="SuspicionComponent" type="Node" parent="." node_paths=PackedStringArray("fearComponent")]
+[node name="SuspicionComponent" type="Node" parent="."]
 script = ExtResource("14_yyr1m")
-fearComponent = NodePath("../FearComponent")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91189, -0.0150942)
@@ -172,13 +183,10 @@ font_size = 80
 [node name="ListeningComponent" type="Node" parent="."]
 script = ExtResource("16_rlqau")
 
-[connection signal="wasHit" from="Hitbox" to="FearComponent" method="_on_hitbox_was_hit"]
-[connection signal="wasHit" from="Hitbox" to="SuspicionComponent" method="_on_hitbox_was_hit"]
+[connection signal="body_entered" from="Head/Sight" to="SightComponent" method="_on_sight_body_entered"]
 [connection signal="canSeePower" from="SightComponent" to="FearComponent" method="_on_sight_component_can_see_power"]
 [connection signal="canSeePower" from="SightComponent" to="SuspicionComponent" method="_on_sight_component_can_see_power"]
 [connection signal="nearWall" from="SightComponent" to="StateMachine/Idle" method="_on_sight_component_near_wall"]
 [connection signal="nearWall" from="SightComponent" to="StateMachine/Suspicious" method="_on_sight_component_near_wall"]
 [connection signal="scared" from="FearComponent" to="StateMachine/Idle" method="_on_fear_component_scared"]
 [connection signal="scared" from="FearComponent" to="StateMachine/Suspicious" method="_on_fear_component_scared"]
-[connection signal="suspicious" from="SuspicionComponent" to="StateMachine/Idle" method="_on_suspicion_component_suspicious"]
-[connection signal="suspicious" from="SuspicionComponent" to="StateMachine/Suspicious" method="_on_suspicion_component_suspicious"]

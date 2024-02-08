@@ -13,7 +13,7 @@ radius = 0.3
 height = 0.6
 
 [node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("light", "hitBox")]
-collision_mask = 4
+collision_mask = 260
 axis_lock_linear_z = true
 script = ExtResource("1_qxfol")
 material = ExtResource("1_fedre")
@@ -28,7 +28,7 @@ mesh = SubResource("SphereMesh_jqjw6")
 
 [node name="Hitbox" type="Area3D" parent="."]
 collision_layer = 64
-collision_mask = 20
+collision_mask = 276
 script = ExtResource("3_31fjl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]

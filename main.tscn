@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c2q2qsfgcepdm" path="res://scenes/human.tscn" id="11_7376c"]
 [ext_resource type="PackedScene" uid="uid://3xmdc7bmvvb7" path="res://scenes/box.tscn" id="11_h105f"]
 
-[node name="main" type="Node3D" groups=["listeners", "sounds"]]
+[node name="main" type="Node3D" groups=["exitDoors"]]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.152779, 0.98826, 0, -0.98826, 0.152779, 16.9884, 22.5371, 0)
@@ -93,6 +93,7 @@ collision_mask = 0
 
 [node name="ExternalHorizontalTile5" parent="Map/External" instance=ExtResource("5_c3b7v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+collision_layer = 256
 collision_mask = 0
 
 [node name="ExternalWallTile4" parent="Map/External" instance=ExtResource("6_8amq4")]
@@ -101,14 +102,17 @@ collision_mask = 0
 
 [node name="ExternalHorizontalTile6" parent="Map/External" instance=ExtResource("5_c3b7v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -10, 0)
+collision_layer = 256
 collision_mask = 0
 
 [node name="ExternalHorizontalTile7" parent="Map/External" instance=ExtResource("5_c3b7v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -10, 0)
+collision_layer = 256
 collision_mask = 0
 
 [node name="ExternalHorizontalTile8" parent="Map/External" instance=ExtResource("5_c3b7v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -10, 0)
+collision_layer = 256
 collision_mask = 0
 
 [node name="backWall" parent="Map/External" instance=ExtResource("7_cprya")]
@@ -124,7 +128,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.2912, -8.99283, -2.53465)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.37612, 0)
 
 [node name="Box" parent="." node_paths=PackedStringArray("light", "hitbox", "soundComponent") instance=ExtResource("11_h105f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.35509, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.355, -1)
 light = NodePath("OmniLight3D")
 hitbox = NodePath("Hitbox")
 soundComponent = NodePath("SoundComponent")
+
+[node name="Door2" parent="." instance=ExtResource("6_n03jy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.749, 1.08383, -2.535)
+
+[node name="Door3" parent="." instance=ExtResource("6_n03jy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.96447, -2.535)

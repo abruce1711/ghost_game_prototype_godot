@@ -34,9 +34,6 @@ func _on_sight_component_near_wall():
 func _on_fear_component_scared():
 	Transitioned.emit(self, "scared")
 
-func _on_suspicion_component_suspicious():
-	Transitioned.emit(self, "suspicious")
-
 func MoveAround():
 	human.velocity = moveDirection * moveSpeed
 	human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)
