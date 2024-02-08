@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bphdqh0qx0xr0"]
 
-[ext_resource type="Script" path="res://script/GrabObjectPower.gd" id="1_32blj"]
-[ext_resource type="Script" path="res://script/HitboxComponent.gd" id="2_um33e"]
+[ext_resource type="Script" path="res://script/GhostPowers/grab_object_power.gd" id="1_32blj"]
+[ext_resource type="Script" path="res://script/Components/hitbox_component.gd" id="2_um33e"]
 [ext_resource type="Texture2D" uid="uid://b0cii8lqxnt7d" path="res://images/chair.png" id="3_hmpqc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hgvmr"]

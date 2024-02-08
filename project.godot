@@ -15,6 +15,10 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Events="*res://script/Misc/events.gd"
+
 [display]
 
 mouse_cursor/custom_image="res://images/cursor.png"
@@ -82,6 +86,7 @@ aimRight={
 3d_physics/layer_6="exit_doors"
 3d_physics/layer_7="ghost_hitbox"
 3d_physics/layer_8="object_hitbox"
+3d_physics/layer_9="external_floor"
 
 [physics]
 

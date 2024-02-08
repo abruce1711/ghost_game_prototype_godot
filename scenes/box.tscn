@@ -1,24 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://3xmdc7bmvvb7"]
+[gd_scene load_steps=7 format=3 uid="uid://3xmdc7bmvvb7"]
 
-[ext_resource type="Script" path="res://script/GrabObjectPower.gd" id="1_ao74f"]
-[ext_resource type="Script" path="res://script/HitboxComponent.gd" id="2_87dxo"]
+[ext_resource type="Script" path="res://script/GhostPowers/grab_object_power.gd" id="1_ao74f"]
+[ext_resource type="Script" path="res://script/Components/hitbox_component.gd" id="2_87dxo"]
+[ext_resource type="Script" path="res://script/Components/sound_component.gd" id="3_wakc2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hgvmr"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4wvkf"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2h4sq"]
-size = Vector3(1.1, 1.1, 1.1)
+size = Vector3(0.55, 0.55, 0.55)
 
-[node name="Box" type="RigidBody3D" node_paths=PackedStringArray("light", "hitbox")]
+[node name="Box" type="RigidBody3D"]
 collision_layer = 8
-collision_mask = 30
+collision_mask = 286
 axis_lock_linear_z = true
 max_contacts_reported = 3
 contact_monitor = true
 script = ExtResource("1_ao74f")
-light = NodePath("OmniLight3D")
-hitbox = NodePath("Hitbox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_hgvmr")
@@ -35,5 +36,8 @@ script = ExtResource("2_87dxo")
 shape = SubResource("BoxShape3D_2h4sq")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
+
+[node name="SoundComponent" type="Node" parent="."]
+script = ExtResource("3_wakc2")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_area_3d_area_entered"]

@@ -4,9 +4,12 @@ var grabbed : bool = false
 var originalObjectParent
 var grabbedPos
 var bobbingUp
+var speed : float
+var speedTimer := 0.0
 
 @export  var light : Light3D
 @export var hitbox : HitboxComponent
+@export var soundComponent : SoundComponent
 
 func _process(delta):
 	## Call base process
@@ -19,7 +22,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	if (activated && !grabbed):
-		print_debug("should grab")
 		Grab()
 	elif (!activated && grabbed):
 		Release()
@@ -27,6 +29,18 @@ func _physics_process(delta):
 		FollowMouse(delta)
 	elif !activated && !grabbed:
 		MoveToBackground(delta)
+	
+	CheckSpeed(delta)
+
+	if speed > 2 && get_contact_count() > 0:
+		soundComponent.MakeSound(speed)
+
+func CheckSpeed(delta : float):
+	if speedTimer <= 0:
+		speedTimer = 0.1
+		speed = abs(self.linear_velocity).length()
+	else:
+		speedTimer -= delta
 
 func FollowMouse(delta : float):
 	var direction = mousePos - self.global_position
@@ -55,6 +69,6 @@ func MoveToBackground(delta : float):
 			self.position.z -= delta/2
 
 func _on_area_3d_area_entered(area):
-	if area is HitboxComponent:
+	if area is HitboxComponent && linear_velocity.length() > 1.0:
 		var areaHitbox : HitboxComponent = area
-		areaHitbox.Damage(25)
+		areaHitbox.Damage(25, self)

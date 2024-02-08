@@ -6,7 +6,7 @@ var activated : bool = false
 var distanceToGhost : float
 var distanceToMouse : float
 var mousePos : Vector3
-var fearValue := 10.0
+var fearValue := 30.0
 var powerTimer = 0
 
 @onready var ghost : Ghost = get_parent().get_node("Ghost")

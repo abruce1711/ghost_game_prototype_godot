@@ -1,16 +1,22 @@
-[gd_scene load_steps=21 format=3 uid="uid://c2q2qsfgcepdm"]
+[gd_scene load_steps=28 format=3 uid="uid://c2q2qsfgcepdm"]
 
-[ext_resource type="Script" path="res://script/HealthComponent.gd" id="1_7afgr"]
-[ext_resource type="Script" path="res://script/Human.gd" id="1_kv0x8"]
-[ext_resource type="Script" path="res://script/HitboxComponent.gd" id="2_lqfi6"]
-[ext_resource type="Script" path="res://script/StateMachine.gd" id="4_2k0ik"]
-[ext_resource type="Script" path="res://script/HumanIdleState.gd" id="5_du427"]
-[ext_resource type="Script" path="res://script/HumanScaredState.gd" id="6_5qfx3"]
+[ext_resource type="Script" path="res://script/Components/health_component.gd" id="1_7afgr"]
+[ext_resource type="Script" path="res://script/Characters/human.gd" id="1_kv0x8"]
+[ext_resource type="Script" path="res://script/Components/hitbox_component.gd" id="2_lqfi6"]
+[ext_resource type="Script" path="res://script/States/state_machine.gd" id="4_2k0ik"]
+[ext_resource type="Script" path="res://script/Characters/head.gd" id="4_ya2t3"]
+[ext_resource type="Script" path="res://script/States/human_idle_state.gd" id="5_du427"]
+[ext_resource type="Script" path="res://script/States/human_scared_state.gd" id="6_5qfx3"]
 [ext_resource type="PackedScene" uid="uid://cs0odfmfb1okd" path="res://scenes/progress_bar_3d.tscn" id="7_mjg5w"]
+[ext_resource type="Script" path="res://script/States/human_suspicious_state.gd" id="7_r1dng"]
 [ext_resource type="Texture2D" uid="uid://cgkeymjlh78e2" path="res://images/heart pixel art 32x32.png" id="8_15vcx"]
 [ext_resource type="StyleBox" uid="uid://bq34wo7s0f42x" path="res://scenes/flat_fear_style_box.tres" id="8_dg1w8"]
 [ext_resource type="StyleBox" uid="uid://bf6aidr76cgva" path="res://scenes/flat_health_style_box.tres" id="8_uoemp"]
 [ext_resource type="Texture2D" uid="uid://cpebkvnsc5fwt" path="res://images/ghostIcon.png" id="11_vvdhn"]
+[ext_resource type="Script" path="res://script/Components/sight_component.gd" id="12_3rj52"]
+[ext_resource type="Script" path="res://script/Components/fear_component.gd" id="13_x07xa"]
+[ext_resource type="Script" path="res://script/Components/suspicion_component.gd" id="14_yyr1m"]
+[ext_resource type="Script" path="res://script/Components/listening_component.gd" id="16_rlqau"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ffojb"]
 radius = 0.4
@@ -34,6 +40,9 @@ top_radius = 0.05
 bottom_radius = 0.05
 height = 0.1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_xcilg"]
+size = Vector3(1, 1, 20)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_pxbg8"]
 radius = 0.25
 
@@ -49,20 +58,22 @@ viewport_path = NodePath("SubViewport")
 
 [node name="Human" type="CharacterBody3D"]
 collision_layer = 8
-collision_mask = 14
+collision_mask = 270
 axis_lock_linear_z = true
 slide_on_ceiling = false
 script = ExtResource("1_kv0x8")
 
-[node name="HealthComponent" type="Node3D" parent="." node_paths=PackedStringArray("healthBar")]
+[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("healthBar")]
 script = ExtResource("1_7afgr")
 healthBar = NodePath("../HealthBar")
 
-[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("healthComponent")]
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("suspicionComponent", "healthComponent", "fearComponent")]
 collision_layer = 16
 collision_mask = 9
 script = ExtResource("2_lqfi6")
+suspicionComponent = NodePath("../SuspicionComponent")
 healthComponent = NodePath("../HealthComponent")
+fearComponent = NodePath("../FearComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.209626, 0)
@@ -77,6 +88,7 @@ shape = SubResource("CylinderShape3D_68rha")
 [node name="Head" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.798623, 0)
 mesh = SubResource("SphereMesh_ybo7m")
+script = ExtResource("4_ya2t3")
 
 [node name="RayCast3D" type="RayCast3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0388213, -0.410589)
@@ -90,6 +102,14 @@ debug_shape_custom_color = Color(0.905882, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0124356, 0.047289, -0.314469)
 mesh = SubResource("CylinderMesh_rv4sy")
 skeleton = NodePath("../..")
+
+[node name="Sight" type="Area3D" parent="Head"]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Sight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.281029, -10.2466)
+shape = SubResource("BoxShape3D_xcilg")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00612593, 0.811755, 0)
@@ -105,15 +125,21 @@ shape = SubResource("CylinderShape3D_exivy")
 script = ExtResource("4_2k0ik")
 initialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("human", "rayCast", "fearBar")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("human", "head")]
 script = ExtResource("5_du427")
 human = NodePath("../..")
-rayCast = NodePath("../../Head/RayCast3D")
-fearBar = NodePath("../../FearBar")
+head = NodePath("../../Head")
 
-[node name="Scared" type="Node" parent="StateMachine" node_paths=PackedStringArray("human")]
+[node name="Scared" type="Node" parent="StateMachine" node_paths=PackedStringArray("text", "human")]
 script = ExtResource("6_5qfx3")
+text = NodePath("../../Label3D")
 human = NodePath("../..")
+
+[node name="Suspicious" type="Node" parent="StateMachine" node_paths=PackedStringArray("human", "text", "head")]
+script = ExtResource("7_r1dng")
+human = NodePath("../..")
+text = NodePath("../../Label3D")
+head = NodePath("../../Head")
 
 [node name="HealthBar" parent="." instance=ExtResource("7_mjg5w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24372, 0)
@@ -137,3 +163,30 @@ offset = Vector2(-350, 0)
 pixel_size = 0.002
 billboard = 1
 texture = ExtResource("11_vvdhn")
+
+[node name="SightComponent" type="Node" parent="." node_paths=PackedStringArray("rayCast")]
+script = ExtResource("12_3rj52")
+rayCast = NodePath("../Head/RayCast3D")
+
+[node name="FearComponent" type="Node" parent="." node_paths=PackedStringArray("fearBar")]
+script = ExtResource("13_x07xa")
+fearBar = NodePath("../FearBar")
+
+[node name="SuspicionComponent" type="Node" parent="."]
+script = ExtResource("14_yyr1m")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91189, -0.0150942)
+billboard = 1
+font_size = 80
+
+[node name="ListeningComponent" type="Node" parent="."]
+script = ExtResource("16_rlqau")
+
+[connection signal="body_entered" from="Head/Sight" to="SightComponent" method="_on_sight_body_entered"]
+[connection signal="canSeePower" from="SightComponent" to="FearComponent" method="_on_sight_component_can_see_power"]
+[connection signal="canSeePower" from="SightComponent" to="SuspicionComponent" method="_on_sight_component_can_see_power"]
+[connection signal="nearWall" from="SightComponent" to="StateMachine/Idle" method="_on_sight_component_near_wall"]
+[connection signal="nearWall" from="SightComponent" to="StateMachine/Suspicious" method="_on_sight_component_near_wall"]
+[connection signal="scared" from="FearComponent" to="StateMachine/Idle" method="_on_fear_component_scared"]
+[connection signal="scared" from="FearComponent" to="StateMachine/Suspicious" method="_on_fear_component_scared"]

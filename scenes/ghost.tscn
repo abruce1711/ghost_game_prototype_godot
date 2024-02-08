@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bys0q5dkl3nvw"]
 
 [ext_resource type="Material" uid="uid://coc753osrfi1v" path="res://materials/ghost.tres" id="1_fedre"]
-[ext_resource type="Script" path="res://script/Ghost.gd" id="1_qxfol"]
-[ext_resource type="Script" path="res://script/HitboxComponent.gd" id="3_31fjl"]
+[ext_resource type="Script" path="res://script/Characters/ghost.gd" id="1_qxfol"]
+[ext_resource type="Script" path="res://script/Components/hitbox_component.gd" id="3_31fjl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_c2dvp"]
 radius = 0.4
@@ -13,7 +13,7 @@ radius = 0.3
 height = 0.6
 
 [node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("light", "hitBox")]
-collision_mask = 4
+collision_mask = 260
 axis_lock_linear_z = true
 script = ExtResource("1_qxfol")
 material = ExtResource("1_fedre")
@@ -28,7 +28,7 @@ mesh = SubResource("SphereMesh_jqjw6")
 
 [node name="Hitbox" type="Area3D" parent="."]
 collision_layer = 64
-collision_mask = 20
+collision_mask = 276
 script = ExtResource("3_31fjl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]

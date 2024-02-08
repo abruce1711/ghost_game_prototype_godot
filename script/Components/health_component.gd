@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 class_name HealthComponent
 
 var MAX_HEALTH := 100
