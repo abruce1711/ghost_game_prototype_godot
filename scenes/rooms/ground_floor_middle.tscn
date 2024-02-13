@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfewtx4re1m7n"]
+
+[ext_resource type="PackedScene" uid="uid://dgax6s07le07q" path="res://scenes/scenery/floor.tscn" id="3_cehk7"]
+[ext_resource type="PackedScene" uid="uid://b1mpl66eev11e" path="res://scenes/scenery/back_wall.tscn" id="4_dub34"]
+
+[node name="GroundFloorMiddle" type="Node3D"]
+
+[node name="Floor" parent="." instance=ExtResource("3_cehk7")]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -2, -0.1, 0)
+collision_layer = 256
+collision_mask = 25
+
+[node name="BackWall" parent="." instance=ExtResource("4_dub34")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -3.1)

@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://credxemjm0dii"]
 
-[ext_resource type="PackedScene" uid="uid://dl5lln60fuu5b" path="res://scenes/internal_floor_tile.tscn" id="3_7r0yh"]
-[ext_resource type="PackedScene" uid="uid://cjwd5n3neypel" path="res://scenes/internal_wall_tile.tscn" id="4_0dkcr"]
-[ext_resource type="PackedScene" uid="uid://b6mgxrfpurmvk" path="res://scenes/external_horizontal_tile.tscn" id="5_c3b7v"]
-[ext_resource type="PackedScene" uid="uid://mejcu8sdtgv5" path="res://scenes/external_wall_tile.tscn" id="6_8amq4"]
-[ext_resource type="PackedScene" uid="uid://0hjo5ccftof0" path="res://scenes/door.tscn" id="6_n03jy"]
-[ext_resource type="PackedScene" uid="uid://6f48npuiahhj" path="res://scenes/backWall.tscn" id="7_cprya"]
-[ext_resource type="PackedScene" uid="uid://bys0q5dkl3nvw" path="res://scenes/ghost.tscn" id="9_4bme2"]
-[ext_resource type="PackedScene" uid="uid://c2q2qsfgcepdm" path="res://scenes/human.tscn" id="11_7376c"]
-[ext_resource type="PackedScene" uid="uid://3xmdc7bmvvb7" path="res://scenes/box.tscn" id="11_h105f"]
+[ext_resource type="PackedScene" uid="uid://dl5lln60fuu5b" path="res://scenes/archive/internal_floor_tile.tscn" id="3_7r0yh"]
+[ext_resource type="PackedScene" uid="uid://cjwd5n3neypel" path="res://scenes/archive/internal_wall_tile.tscn" id="4_0dkcr"]
+[ext_resource type="PackedScene" uid="uid://b6mgxrfpurmvk" path="res://scenes/archive/external_horizontal_tile.tscn" id="5_c3b7v"]
+[ext_resource type="PackedScene" uid="uid://mejcu8sdtgv5" path="res://scenes/archive/external_wall_tile.tscn" id="6_8amq4"]
+[ext_resource type="PackedScene" uid="uid://0hjo5ccftof0" path="res://scenes/scenery/exit_door.tscn" id="6_n03jy"]
+[ext_resource type="PackedScene" uid="uid://6f48npuiahhj" path="res://scenes/archive/backWall.tscn" id="7_cprya"]
+[ext_resource type="PackedScene" uid="uid://bys0q5dkl3nvw" path="res://scenes/characters/ghost.tscn" id="9_4bme2"]
+[ext_resource type="PackedScene" uid="uid://c2q2qsfgcepdm" path="res://scenes/characters/human.tscn" id="11_7376c"]
+[ext_resource type="PackedScene" uid="uid://3xmdc7bmvvb7" path="res://scenes/scenery/box.tscn" id="11_h105f"]
 
 [node name="main" type="Node3D" groups=["exitDoors"]]
 
@@ -127,11 +127,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.2912, -8.99283, -2.53465)
 [node name="Ghost" parent="." instance=ExtResource("9_4bme2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.37612, 0)
 
-[node name="Box" parent="." node_paths=PackedStringArray("light", "hitbox", "soundComponent") instance=ExtResource("11_h105f")]
+[node name="Box" parent="." instance=ExtResource("11_h105f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.355, -1)
-light = NodePath("OmniLight3D")
-hitbox = NodePath("Hitbox")
-soundComponent = NodePath("SoundComponent")
 
 [node name="Door2" parent="." instance=ExtResource("6_n03jy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.749, 1.08383, -2.535)

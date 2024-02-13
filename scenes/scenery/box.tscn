@@ -13,13 +13,16 @@ size = Vector3(0.5, 0.5, 0.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_2h4sq"]
 size = Vector3(0.55, 0.55, 0.55)
 
-[node name="Box" type="RigidBody3D"]
+[node name="Box" type="RigidBody3D" node_paths=PackedStringArray("light", "hitbox", "soundComponent")]
 collision_layer = 8
 collision_mask = 286
 axis_lock_linear_z = true
 max_contacts_reported = 3
 contact_monitor = true
 script = ExtResource("1_ao74f")
+light = NodePath("OmniLight3D")
+hitbox = NodePath("Hitbox")
+soundComponent = NodePath("SoundComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_hgvmr")
@@ -36,6 +39,7 @@ script = ExtResource("2_87dxo")
 shape = SubResource("BoxShape3D_2h4sq")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 0.0
 
 [node name="SoundComponent" type="Node" parent="."]
 script = ExtResource("3_wakc2")

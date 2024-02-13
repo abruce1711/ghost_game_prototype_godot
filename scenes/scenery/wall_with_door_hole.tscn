@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvtp0uoaq3yru"]
+
+[ext_resource type="PackedScene" uid="uid://v6ggv0y6e802" path="res://3d_models/scenery/wall_with_bool_door.fbx" id="1_08mxu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ti8t6"]
+size = Vector3(2.5, 6, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wd2cd"]
+size = Vector3(2.5, 6, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_erqfy"]
+size = Vector3(1, 3.944, 0.2)
+
+[node name="WallWithDoorHole" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 24
+
+[node name="Root Scene" parent="." instance=ExtResource("1_08mxu")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75324, 3.00877, 0)
+shape = SubResource("BoxShape3D_ti8t6")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74448, 3.00315, 0)
+shape = SubResource("BoxShape3D_wd2cd")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.03163, 0)
+shape = SubResource("BoxShape3D_erqfy")

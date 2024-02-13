@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfe4c4fm8iag0"]
+
+[ext_resource type="PackedScene" uid="uid://d182fk6kr7u8e" path="res://3d_models/scenery/wall.fbx" id="1_xs1c1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qeirt"]
+size = Vector3(6, 6, 0.2)
+
+[node name="ExternalWall" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 25
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.01131, 0)
+shape = SubResource("BoxShape3D_qeirt")
+
+[node name="Root Scene2" parent="." instance=ExtResource("1_xs1c1")]

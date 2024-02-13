@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8moi7twi6kf2"]
+
+[ext_resource type="PackedScene" uid="uid://dfe4c4fm8iag0" path="res://scenes/scenery/external_wall.tscn" id="1_e840i"]
+[ext_resource type="PackedScene" uid="uid://cvtp0uoaq3yru" path="res://scenes/scenery/wall_with_door_hole.tscn" id="2_n4kkq"]
+[ext_resource type="PackedScene" uid="uid://dgax6s07le07q" path="res://scenes/scenery/floor.tscn" id="3_b3d2t"]
+[ext_resource type="PackedScene" uid="uid://b1mpl66eev11e" path="res://scenes/scenery/back_wall.tscn" id="4_rjqn1"]
+
+[node name="UpperFloorExternalRight" type="Node3D"]
+
+[node name="ExternalWall" parent="." instance=ExtResource("1_e840i")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 0, 0)
+
+[node name="WallWithDoorHole" parent="." instance=ExtResource("2_n4kkq")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3, 0, 0.003)
+
+[node name="Floor" parent="." instance=ExtResource("3_b3d2t")]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -2, -0.1, 0)
+
+[node name="BackWall" parent="." instance=ExtResource("4_rjqn1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -3.1)

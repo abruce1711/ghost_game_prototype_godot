@@ -15,7 +15,6 @@ func _on_sight_component_can_see_power(fear : float, _power):
 
 
 func HitWithObject():
-	print_debug("hit with object")
 	fearLevel += 30
 	fearBar.SetValue(fearLevel)
 	

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgax6s07le07q"]
+
+[ext_resource type="PackedScene" uid="uid://yf63ly5q4k3m" path="res://3d_models/scenery/floor.fbx" id="1_2lco4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dpxku"]
+size = Vector3(6, 6.2, 0.2)
+
+[node name="Floor" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.31134e-07, -3)
+collision_layer = 2
+collision_mask = 24
+
+[node name="Root Scene" parent="." instance=ExtResource("1_2lco4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_dpxku")

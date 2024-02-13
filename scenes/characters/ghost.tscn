@@ -12,12 +12,11 @@ material = ExtResource("1_fedre")
 radius = 0.3
 height = 0.6
 
-[node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("light", "hitBox")]
+[node name="Ghost" type="CharacterBody3D" node_paths=PackedStringArray("hitBox")]
 collision_mask = 260
 axis_lock_linear_z = true
 script = ExtResource("1_qxfol")
 material = ExtResource("1_fedre")
-light = NodePath("OmniLight3D")
 hitBox = NodePath("Hitbox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -35,7 +34,4 @@ script = ExtResource("3_31fjl")
 shape = SubResource("SphereShape3D_c2dvp")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.24763, 8.76863)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.307762, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.65531)

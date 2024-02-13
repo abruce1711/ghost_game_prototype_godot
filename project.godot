@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ghost_3D_Side_Prototype"
-run/main_scene="res://main.tscn"
+run/main_scene="res://scenes/levels/LevelOne.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
@@ -78,6 +78,7 @@ aimRight={
 
 [layer_names]
 
+3d_render/layer_1="ghost"
 3d_physics/layer_1="ghost"
 3d_physics/layer_2="internal_walls"
 3d_physics/layer_3="external_walls"

@@ -24,9 +24,6 @@ func Enter():
 
 	doors.sort_custom(sortClosestExitDoor)
 	var exitDoor = doors[0]
-	
-	for door in doors:
-		print_debug(door.global_position)
 
 	moveDirection = (exitDoor.global_position - human.global_position).normalized()
 	human.axis_lock_linear_z = false

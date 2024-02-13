@@ -12,7 +12,7 @@ albedo_color = Color(0, 0, 0, 1)
 material = SubResource("ORMMaterial3D_4b6wd")
 size = Vector3(1, 2, 0.05)
 
-[node name="Door" type="Area3D"]
+[node name="ExitDoor" type="Area3D"]
 collision_layer = 32
 collision_mask = 16
 script = ExtResource("1_yc3mk")

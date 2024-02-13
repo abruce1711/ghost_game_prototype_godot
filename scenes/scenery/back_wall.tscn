@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1mpl66eev11e"]
+
+[ext_resource type="PackedScene" uid="uid://di24l3srflsy3" path="res://3d_models/scenery/back_wall.fbx" id="1_kyw12"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pushq"]
+size = Vector3(6.2, 6.2, 0.2)
+
+[node name="BackWall" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 25
+
+[node name="Root Scene" parent="." instance=ExtResource("1_kyw12")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.09106, 0)
+shape = SubResource("BoxShape3D_pushq")

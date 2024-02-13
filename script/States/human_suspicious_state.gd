@@ -13,18 +13,14 @@ var suspiciousLocation : Vector3
 var arrivedAtSuspiciousLocation : bool
 var suspiciousObject : Power
 var lookTimer : float
-var looking : bool 
 	
 func Enter():
 	if text:
 		text.text = "??"
 
-	print_debug("enter: %s" % suspiciousLocation)
 	moveSpeed = 3.0
 	lookTimer = 3.0
 	arrivedAtSuspiciousLocation = false
-	looking = true
-	head.lookSpeed = 0.5
 	GoToSupiciousLocation()
 
 func Update(delta : float):
@@ -43,7 +39,13 @@ func PhysicsUpdate(delta : float):
 		if !arrivedAtSuspiciousLocation && DistanceToSuspiciousLocation() < 1:
 			arrivedAtSuspiciousLocation = true
 			moveSpeed = 1.5
-		elif suspiciousObject && suspiciousObject.activated:
+		elif suspiciousObject && suspiciousObject.activated && DistanceToSuspiciousLocation() > 1:
+			suspiciousLocation = suspiciousObject.global_position
+			GoToSupiciousLocation()
+			moveSpeed = 1
+		elif suspiciousObject && suspiciousObject.activated && DistanceToSuspiciousLocation() <= 1:
+			suspiciousLocation = suspiciousObject.global_position
+			GoToSupiciousLocation()
 			moveSpeed = 0
 		elif arrivedAtSuspiciousLocation && lookTimer > 0:
 			moveSpeed = 0
@@ -52,12 +54,7 @@ func PhysicsUpdate(delta : float):
 			Wander(delta)
 			moveSpeed = 2
 			suspiciousObject = null
-			looking = false
-		
-		if suspiciousObject:
-			head.look_at(suspiciousObject.global_position)
-		elif suspiciousLocation && looking:
-			head.look_at(suspiciousLocation)
+
 
 func DistanceToSuspiciousLocation():
 	return human.global_position.distance_to(Vector3(suspiciousLocation.x, human.global_position.y, human.global_position.z))
