@@ -15,7 +15,7 @@ func _on_sound_heard(volume, location):
 	if distanceToSound / 2 <= volume:
 
 		if suspicionComponent:
-			suspicionComponent.TriggerSuspiciousStateFromLocation(location)
+			suspicionComponent.InvestigateNoise(location)
 		
 		if fearComponent:
 			fearComponent.HeardNoise()

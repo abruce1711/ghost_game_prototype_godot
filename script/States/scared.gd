@@ -1,5 +1,5 @@
 extends State
-class_name HumanScaredState
+class_name Scared
 
 @export var text : Label3D
 @export var human : Human

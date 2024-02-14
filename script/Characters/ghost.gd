@@ -1,6 +1,6 @@
 extends CharacterBody3D
 class_name Ghost
-const SPEED = 8.0
+const SPEED = 4.0
 const ACCELERATION = 70.0
 const DECELERATION = 20.0
 @export var material : ORMMaterial3D

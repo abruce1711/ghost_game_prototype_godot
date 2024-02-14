@@ -1,11 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://clxi6cqen6mti"]
+[gd_scene load_steps=7 format=3 uid="uid://clxi6cqen6mti"]
 
 [ext_resource type="PackedScene" uid="uid://dfe4c4fm8iag0" path="res://scenes/scenery/external_wall.tscn" id="1_07ghg"]
+[ext_resource type="Script" path="res://script/room.gd" id="1_epmbe"]
 [ext_resource type="PackedScene" uid="uid://cvtp0uoaq3yru" path="res://scenes/scenery/wall_with_door_hole.tscn" id="2_upo7s"]
 [ext_resource type="PackedScene" uid="uid://dgax6s07le07q" path="res://scenes/scenery/floor.tscn" id="3_tdbqv"]
 [ext_resource type="PackedScene" uid="uid://b1mpl66eev11e" path="res://scenes/scenery/back_wall.tscn" id="4_y8bvp"]
 
-[node name="GroundFloorExternalRight" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ti3ug"]
+size = Vector3(5.8, 6, 6)
+
+[node name="GroundFloorExternalRight" type="Area3D"]
+script = ExtResource("1_epmbe")
 
 [node name="ExternalWall" parent="." instance=ExtResource("1_07ghg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 0, 0)
@@ -20,3 +25,7 @@ collision_mask = 25
 
 [node name="BackWall" parent="." instance=ExtResource("4_y8bvp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -3.1)
+
+[node name="Bounds" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("BoxShape3D_ti3ug")

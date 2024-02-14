@@ -1,5 +1,5 @@
 extends State
-class_name HumanSuspiciousState
+class_name HumanSuspiciousStateNew
 
 @export var human : CharacterBody3D
 @export  var moveSpeed := 3.0
@@ -14,7 +14,8 @@ var arrivedAtSuspiciousLocation : bool
 var suspiciousObject : Power
 var lookTimer : float
 var roomOfInterest : Room
-	
+var inRoomOfInterest : bool
+
 func Enter():
 	if text:
 		text.text = "??"
@@ -31,9 +32,8 @@ func Enter():
 
 	if roomOfInterest:
 		print_debug("going to room")
-		GoToSupiciousRoom()
-	else:
-		GoToSupiciousLocation()
+		SetRoomDirection()
+
 
 func Update(delta : float):
 	if suspicionTimer > 0:
@@ -43,36 +43,11 @@ func Update(delta : float):
 		Transitioned.emit(self, "idle")
 
 
-func PhysicsUpdate(delta : float):
+func PhysicsUpdate(_delta : float):
 	if human:
 		human.velocity = moveDirection * moveSpeed
 		human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)
 
-		if !arrivedAtSuspiciousLocation && DistanceToSuspiciousLocation() < 1:
-			arrivedAtSuspiciousLocation = true
-			moveSpeed = 1.5
-		elif suspiciousObject && suspiciousObject.activated && DistanceToSuspiciousLocation() > 1:
-			suspiciousLocation = suspiciousObject.global_position
-			GoToSupiciousLocation()
-			moveSpeed = 1
-		elif suspiciousObject && suspiciousObject.activated && DistanceToSuspiciousLocation() <= 1:
-			suspiciousLocation = suspiciousObject.global_position
-			GoToSupiciousLocation()
-			moveSpeed = 0
-		elif arrivedAtSuspiciousLocation && lookTimer > 0:
-			moveSpeed = 0
-			lookTimer -= delta
-		elif arrivedAtSuspiciousLocation && lookTimer <= 0:
-			Wander(delta)
-			moveSpeed = 2
-			suspiciousObject = null
-
-
-func DistanceToSuspiciousLocation():
-	return human.global_position.distance_to(Vector3(suspiciousLocation.x, human.global_position.y, human.global_position.z))
-
-func ClearSuspicions():
-	suspiciousLocation = Vector3()
 
 func Wander(delta : float):
 	if wanderTime > 0:
@@ -81,16 +56,8 @@ func Wander(delta : float):
 		moveDirection = Vector3(randf_range(-1, 1), 0, 0).normalized()
 		wanderTime = randf_range(5, 10)
 
-func GoToSupiciousLocation():
-	var moveX : int
-	if suspiciousLocation.x < human.global_position.x:
-		moveX = -1
-	else:
-		moveX = 1
 
-	moveDirection = Vector3(moveX, 0, 0).normalized()
-
-func GoToSupiciousRoom():
+func SetRoomDirection():
 	var moveX : int
 	if roomOfInterest.center < human.global_position.x:
 		moveX = -1
@@ -98,6 +65,9 @@ func GoToSupiciousRoom():
 		moveX = 1
 
 	moveDirection = Vector3(moveX, 0, 0).normalized()
+
+func TravelToRoom():
+	var roomLoc = human.global_position
 
 
 func _on_sight_component_near_wall():
