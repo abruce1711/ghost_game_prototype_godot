@@ -23,6 +23,7 @@ func _ready():
 func _process(delta):
 	if currentState:
 		currentState.Update(delta)
+		#print_debug(currentState)
 		
 func _physics_process(delta):
 	if currentState:

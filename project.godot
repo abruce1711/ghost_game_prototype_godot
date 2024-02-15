@@ -88,6 +88,7 @@ aimRight={
 3d_physics/layer_7="ghost_hitbox"
 3d_physics/layer_8="object_hitbox"
 3d_physics/layer_9="external_floor"
+3d_physics/layer_10="rooms"
 
 [physics]
 

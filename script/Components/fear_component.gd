@@ -4,7 +4,8 @@ class_name FearComponent
 const MIN_FEAR = 0
 const MAX_FEAR = 100
 
-signal scared
+@onready var human = get_parent() as Human
+@onready var stateMachine = human.get_node("StateMachine") as StateMachine
 
 @export var fearBar : ProgressBar3D
 
@@ -19,7 +20,8 @@ func HitWithObject():
 	fearBar.SetValue(fearLevel)
 	
 	if fearLevel >= MAX_FEAR:
-		scared.emit()
+		TransitionToScared()
+
 
 func HeardNoise():
 	SetFear(10)
@@ -30,4 +32,9 @@ func SetFear(fear : float):
 	fearBar.SetValue(fearLevel)
 	
 	if fearLevel >= MAX_FEAR:
-		scared.emit()
+		TransitionToScared()
+
+
+func TransitionToScared():
+	var state = stateMachine.currentState
+	state.Transitioned.emit(state, "Scared")

@@ -11,7 +11,7 @@ var isScary := false
 
 func Damage(damage : float, object : Node3D):
 	if suspicionComponent:
-		suspicionComponent.TriggerSuspiciousStateFromObject(object)
+		suspicionComponent.StruckWithObject(object)
 		
 	if fearComponent:
 		fearComponent.HitWithObject()

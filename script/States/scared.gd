@@ -1,11 +1,14 @@
 extends State
-class_name HumanScaredState
+class_name Scared
 
 @export var text : Label3D
 @export var human : Human
 
 var moveDirection : Vector3
 var movementSpeed := 5.0
+
+var targetRoom : Room
+var zUnlocked := false
 
 func Enter():
 	if text:
@@ -23,10 +26,18 @@ func Enter():
 			doors.erase(door)
 
 	doors.sort_custom(sortClosestExitDoor)
-	var exitDoor = doors[0]
+	var exitDoor = doors[0] as Door
+
+	var rooms = get_tree().get_nodes_in_group("rooms")
+
+	for room in rooms:
+		if !room is Room:
+			rooms.erase(room)
+		elif room.IsInRoom(exitDoor.global_position):
+			targetRoom = room
+			break
 
 	moveDirection = (exitDoor.global_position - human.global_position).normalized()
-	human.axis_lock_linear_z = false
 	
 func Exit():
 	pass;
@@ -35,9 +46,13 @@ func Update(_delta: float):
 	pass;
 	
 func PhysicsUpdate(_delta: float):
-	if human:
-		human.velocity = moveDirection * movementSpeed
-		human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)
+	if targetRoom.IsInRoom(human.global_position) && !zUnlocked:
+		zUnlocked = true
+		human.axis_lock_linear_z = false
+
+
+	human.velocity = moveDirection * movementSpeed
+	human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)
 
 
 func sortClosestExitDoor(a : Node3D, b : Node3D):
