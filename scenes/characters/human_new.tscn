@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://script/States/state_machine.gd" id="5_04y1s"]
 [ext_resource type="Script" path="res://script/States/search.gd" id="6_3ww2t"]
 [ext_resource type="Script" path="res://script/States/move_to_room.gd" id="7_14i34"]
-[ext_resource type="Script" path="res://script/States/human_scared_state.gd" id="7_of7cu"]
+[ext_resource type="Script" path="res://script/States/scared.gd" id="7_of7cu"]
 [ext_resource type="Script" path="res://script/States/investigate.gd" id="8_ualvh"]
 [ext_resource type="PackedScene" uid="uid://cs0odfmfb1okd" path="res://scenes/characters/progress_bar_3d.tscn" id="9_s0rcg"]
 [ext_resource type="Script" path="res://script/States/can_see_power.gd" id="9_tiwvo"]
@@ -87,11 +87,10 @@ mesh = SubResource("CylinderMesh_0nw12")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_68rha")
 
-[node name="Head" type="MeshInstance3D" parent="." node_paths=PackedStringArray("sight")]
+[node name="Head" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.798623, 0)
 mesh = SubResource("SphereMesh_ybo7m")
 script = ExtResource("4_4qcog")
-sight = NodePath("../SightComponent")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0124356, 0.047289, -0.314469)
@@ -105,10 +104,6 @@ collision_mask = 12
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Sight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.281029, -10.2466)
 shape = SubResource("BoxShape3D_xcilg")
-
-[node name="RayCast3D" type="RayCast3D" parent="Head"]
-target_position = Vector3(0, 0, -20)
-collision_mask = 6
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00612593, 0.811755, 0)
@@ -177,7 +172,7 @@ texture = ExtResource("13_fdbcn")
 
 [node name="SightComponent" type="Node" parent="." node_paths=PackedStringArray("rayCast", "head")]
 script = ExtResource("14_hywin")
-rayCast = NodePath("../Head/RayCast3D")
+rayCast = NodePath("../RayCast3D")
 head = NodePath("../Head")
 
 [node name="FearComponent" type="Node" parent="." node_paths=PackedStringArray("fearBar")]
@@ -195,6 +190,12 @@ font_size = 80
 [node name="ListeningComponent" type="Node" parent="."]
 script = ExtResource("17_5p8as")
 
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.181326, 0)
+target_position = Vector3(0, 0, -20)
+collision_mask = 6
+
 [connection signal="body_entered" from="Head/Sight" to="SightComponent" method="_on_sight_body_entered"]
 [connection signal="canSeePower" from="SightComponent" to="FearComponent" method="_on_sight_component_can_see_power"]
 [connection signal="canSeePower" from="SightComponent" to="SuspicionComponent" method="_on_sight_component_can_see_power"]
+[connection signal="nearWall" from="SightComponent" to="StateMachine/Search" method="_on_sight_component_near_wall"]

@@ -14,8 +14,14 @@ func _on_sound_heard(volume, location):
 
 	if distanceToSound / 2 <= volume:
 
+		var roomOfInterest : Room
+		var rooms = get_tree().get_nodes_in_group("rooms")
+		for room in rooms:
+			if room is Room && room.soundLocation:
+				roomOfInterest = room as Room
+
 		if suspicionComponent:
-			suspicionComponent.InvestigateNoise(location)
+			suspicionComponent.InvestigateNoise(location, roomOfInterest.IsInRoom(human.global_position))
 		
 		if fearComponent:
 			fearComponent.HeardNoise()

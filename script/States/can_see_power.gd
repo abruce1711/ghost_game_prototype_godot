@@ -11,7 +11,7 @@ var moveDirection : Vector3
 var wanderTime : float
 
 func Enter():
-	pass
+	human.velocity = Vector3.ZERO
 
 func Update(_delta : float):
 	pass

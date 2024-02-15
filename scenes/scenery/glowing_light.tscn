@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://byd6gyd8g6ect"]
+
+[node name="GlowingLight" type="Node3D"]
+
+[node name="OmniLight3D9" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.21857, 1.429)
+layers = 1022
+light_color = Color(0.992157, 0.858824, 0.443137, 1)
+light_size = 1.0

@@ -23,7 +23,7 @@ func Enter():
 			
 
 	if roomOfInterest:
-		if human.global_position.x > roomOfInterest.leftBound && human.global_position.x < roomOfInterest.rightBound:
+		if HumanInRoom():
 			Transition("Investigate")
 		else:
 			SetRoomDirection()
@@ -33,13 +33,16 @@ func Enter():
 
 
 func PhysicsUpdate(_delta : float):
-	if human.global_position.distance_to(roomLocation) > 1:
+	if HumanInRoom():
+		Transition("Investigate")
+	else:
 		human.velocity = moveDirection * moveSpeed
 		human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)
-	else:
-		human.velocity = Vector3.ZERO
-		Transition("Investigate")
-		pass
+
+
+func HumanInRoom():
+	return human.global_position.x > roomOfInterest.leftBound && human.global_position.x < roomOfInterest.rightBound
+
 
 func Transition(state):
 	Transitioned.emit(self, state)

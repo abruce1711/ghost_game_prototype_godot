@@ -22,7 +22,7 @@ func _process(delta):
 func _physics_process(_delta):
 	if rayCast && rayCast.is_colliding() && rayCast.get_collider() is StaticBody3D:
 		var distanceToWall = rayCast.global_transform.origin.distance_to(rayCast.get_collision_point())
-		if distanceToWall < 2 && wallTimer <= 0:
+		if distanceToWall < 1 && wallTimer <= 0:
 			wallTimer = 1
 			nearWall.emit()
 
@@ -35,7 +35,6 @@ func _on_sight_body_entered(body):
 		if powerTimer <= 0 && power.activated:
 			powerTimer = 5
 			canSeePower.emit(power.fearValue, power)
-			head.SetLookAtPower(power)
 
 
 func SightRaycast(node : Node3D):

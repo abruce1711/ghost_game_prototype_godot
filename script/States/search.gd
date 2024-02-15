@@ -8,6 +8,8 @@ class_name Search
 
 var moveDirection : Vector3
 var wanderTime := 0.0
+var nearWallTimer := 0.0
+var nearWall := false
 
 func Enter():
 	pass
@@ -17,12 +19,18 @@ func Update(delta : float):
 		wanderTime -= delta
 	else:
 		Wander(delta)
+	if nearWallTimer > 0 && nearWall:
+		nearWallTimer -= delta
+	elif nearWallTimer <= 0 && nearWall:
+		nearWall = false
 
 
-func PhysicsUpdate(_delta : float):
-	if human:
-		human.velocity = moveDirection * moveSpeed
-		human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, 0.1)
+func PhysicsUpdate(delta : float):
+	if !nearWall:
+		human.velocity = human.velocity.lerp(moveDirection * moveSpeed, delta)
+	else:
+		human.velocity.x *= 0.9
+	human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, delta)
 
 
 func Wander(delta : float):
@@ -34,6 +42,8 @@ func Wander(delta : float):
 
 func _on_sight_component_near_wall():
 	moveDirection.x *= -1
+	nearWallTimer = 1
+	nearWall = true
 
 func _on_fear_component_scared():
 	Transitioned.emit(self, "scared")

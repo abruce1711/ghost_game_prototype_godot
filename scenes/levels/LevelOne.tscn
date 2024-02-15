@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bxwxhkgm772uw"]
+[gd_scene load_steps=14 format=3 uid="uid://bxwxhkgm772uw"]
 
 [ext_resource type="PackedScene" uid="uid://by5od66yvnd5" path="res://scenes/rooms/ground_floor_external_left.tscn" id="1_cn864"]
 [ext_resource type="PackedScene" uid="uid://bys0q5dkl3nvw" path="res://scenes/characters/ghost.tscn" id="2_4xapp"]
@@ -10,8 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://cnlf5ivevw6he" path="res://scenes/rooms/upper_floor_middle.tscn" id="9_eeyku"]
 [ext_resource type="PackedScene" uid="uid://b8moi7twi6kf2" path="res://scenes/rooms/upper_floor_external_right.tscn" id="10_4iyav"]
 [ext_resource type="PackedScene" uid="uid://0hjo5ccftof0" path="res://scenes/scenery/exit_door.tscn" id="12_as0de"]
-[ext_resource type="PackedScene" uid="uid://xk1vscc8wec1" path="res://scenes/scenery/chandelier.tscn" id="12_fx1x5"]
 [ext_resource type="PackedScene" uid="uid://ft61g3l6s3o5" path="res://scenes/characters/human_new.tscn" id="12_jhtve"]
+[ext_resource type="PackedScene" uid="uid://bekr21fawkqyc" path="res://scenes/ui/fps_counter.tscn" id="13_8ppx1"]
+[ext_resource type="PackedScene" uid="uid://byd6gyd8g6ect" path="res://scenes/scenery/glowing_light.tscn" id="13_qfntk"]
 
 [node name="LevelOne" type="Node3D" groups=["exitDoors", "rooms"]]
 
@@ -76,17 +77,28 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.287
 [node name="WallLight12" parent="WallLights" instance=ExtResource("7_dmkkv")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 14.4106, 8.79504, -2.37177)
 
-[node name="Chandelier" parent="." instance=ExtResource("12_fx1x5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.86572, 0)
-
-[node name="Chandelier2" parent="." instance=ExtResource("12_fx1x5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.40229, 4.86572, 0)
-
-[node name="Chandelier3" parent="." instance=ExtResource("12_fx1x5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6574, 4.86572, 0)
-
 [node name="ExitDoor" parent="." instance=ExtResource("12_as0de")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4073, 1.00871, -2.95596)
 
 [node name="Human" parent="." instance=ExtResource("12_jhtve")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890218, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.890218, 0)
+
+[node name="FPSCounter" parent="." instance=ExtResource("13_8ppx1")]
+
+[node name="GlowingLight" parent="." instance=ExtResource("13_qfntk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.33784, 0)
+
+[node name="GlowingLight2" parent="." instance=ExtResource("13_qfntk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0928, 4.33784, 0)
+
+[node name="GlowingLight3" parent="." instance=ExtResource("13_qfntk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0675, 4.33784, 0)
+
+[node name="GlowingLight4" parent="." instance=ExtResource("13_qfntk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0675, 11.4805, 0)
+
+[node name="GlowingLight5" parent="." instance=ExtResource("13_qfntk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.99843, 11.302, 0)
+
+[node name="GlowingLight6" parent="." instance=ExtResource("13_qfntk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.157213, 11.6563, 0)
