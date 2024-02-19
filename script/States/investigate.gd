@@ -21,7 +21,6 @@ func Enter():
 		# location is behind human
 		if (human.rotation_degrees.y < 0 && location.x < human.global_position.x) || (human.rotation_degrees.y > 0 && location.x > human.global_position.x):
 			noiseBehind = true
-			print_debug("noise behind")
 
 func Update(delta : float):
 	if stateTimer > 0:
