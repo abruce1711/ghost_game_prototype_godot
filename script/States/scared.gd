@@ -11,6 +11,7 @@ var targetRoom : Room
 var zUnlocked := false
 
 func Enter():
+	super()
 	if text:
 		text.text = "ahhh !!!"
 
@@ -38,12 +39,7 @@ func Enter():
 			break
 
 	moveDirection = (exitDoor.global_position - human.global_position).normalized()
-	
-func Exit():
-	pass;
-	
-func Update(_delta: float):
-	pass;
+	animationPlayer.Run()
 	
 func PhysicsUpdate(_delta: float):
 	if targetRoom.IsInRoom(human.global_position) && !zUnlocked:

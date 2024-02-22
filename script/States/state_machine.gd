@@ -2,7 +2,7 @@ extends Node
 class_name StateMachine
 
 @export var initialState : State
-@export var rayCast : RayCast3D
+@onready var animationPlayer : HumanAnimation = get_node("../AnimationPlayer")
 
 var currentState : State
 var states : Dictionary = {}
@@ -15,6 +15,10 @@ func _ready():
 			child.Transitioned.connect(onChildTransition)
 	
 	if initialState:
+		if !initialState.animationPlayer:
+			print_debug("ap: %s" % animationPlayer)
+			initialState.animationPlayer = animationPlayer
+
 		initialState.Enter()
 		currentState = initialState
 
@@ -41,6 +45,9 @@ func onChildTransition(state, newStateName):
 	if currentState:
 		currentState.Exit()
 	
+	if !newState.animationPlayer:
+		newState.animationPlayer = animationPlayer
+
 	newState.Enter()
 	
 	currentState = newState

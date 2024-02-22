@@ -4,12 +4,8 @@ class_name Search
 @export var human : CharacterBody3D
 @export  var moveSpeed : float
 @export var text : Label3D
-@export var head : Head
-@export var rayCast : RayCast3D
-@export var model : Node3D
-@export var at : AnimationTree
 
-var moveDirection := Vector3(1, 0, 0).normalized()
+var moveDirection : Vector3
 var wanderTime := 10.0
 var turnTimer := 0.0
 var turning := false
@@ -20,11 +16,17 @@ var turnCoolDown := 0.0
 var lastSpeed = moveSpeed
 var lastRotation : float
 
-@export var ap  : AnimationPlayer
-
 func Enter():
-	ap.play("walking")
-	human.velocity = Vector3(1.99, 0, 0)
+	super()
+	if !turning:
+		animationPlayer.Walk()
+
+	if human.rotation.y < 0 && !turning:
+		moveDirection = Vector3(1, 0, 0)
+		human.velocity = Vector3(1, 0, 0)
+	elif human.rotation.y > 0 && !turning:
+		moveDirection = Vector3(-1, 0, 0)
+		human.velocity = Vector3(-1, 0, 0)
 	
 func Update(delta : float):
 	if turnCoolDown > 0:
@@ -37,24 +39,23 @@ func Update(delta : float):
 
 
 func PhysicsUpdate(delta : float):
-	human.velocity = human.velocity.lerp(moveDirection * moveSpeed, delta)
+	if !turning:
+		human.velocity = human.velocity.lerp(moveDirection * moveSpeed, delta)
 
 	if turning:
 		human.rotation.y = lerp(human.rotation.y, -moveDirection.x*1.55, delta*2)
 
 		if moveDirection.x == -1:
-			ap.play("left-turn-in-place")
+			animationPlayer.TurnLeft()
 		elif moveDirection.x == 1:
-			ap.play("right-turn-in-place")
+			animationPlayer.TurnRight()
 
 		if (lastRotation < 0 && human.rotation.y >= 1.5) || (lastRotation > 0 && human.rotation.y <= -1.5):
 			turning = false
-			print_debug("last rotation: %s" % lastRotation)
-			print_debug("current rotation: %s" % human.rotation.y)
 
-			ap.play("walking")
+			animationPlayer.Walk()
 			human.velocity = Vector3(1.99*moveDirection.x, 0, 0)
-			moveSpeed = 2
+			moveSpeed = 1
 		
 
 func Wander(delta : float):
@@ -65,12 +66,13 @@ func Wander(delta : float):
 
 
 func _on_sight_component_near_wall():
+	if active:
 		StopWalking()
 
 
 func StopWalking():
 	if turnCoolDown <= 0:
-		ap.play("stop-walking", 1)
+		animationPlayer.StopWalking()
 		moveSpeed = 0
 		turnCoolDown = 5
 
@@ -87,6 +89,15 @@ func _on_fear_component_scared():
 
 
 func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "stop-walking":
+	if anim_name == Animations.StopWalking:
 		human.velocity = Vector3.ZERO
 		TurnAround()
+
+
+func _on_investigate_turn_around():
+	TurnAround()
+
+
+func _on_move_to_room_set_move_direction(moveDir:Vector3):
+	moveDirection = moveDir
+	print_debug("move dir set by signal: %s" % moveDir)

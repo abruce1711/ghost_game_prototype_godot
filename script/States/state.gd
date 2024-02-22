@@ -1,13 +1,16 @@
 extends Node
 class_name State
+var animationPlayer : HumanAnimation
 
 signal Transitioned
 
+var active := false
+
 func Enter():
-	pass;
+	active = true
 
 func Exit():
-	pass;
+	active = false
 	
 func Update(_delta: float):
 	pass;

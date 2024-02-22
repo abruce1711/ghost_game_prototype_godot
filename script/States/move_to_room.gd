@@ -1,6 +1,8 @@
 extends State
 class_name MoveToRoom
 
+signal setMoveDirection(moveDirection : Vector3)
+
 @export var human : CharacterBody3D
 @export  var moveSpeed := 3.0
 @export var text : Label3D
@@ -11,6 +13,8 @@ var inRoomOfInterest : bool
 var roomLocation : Vector3
 
 func Enter():
+	super()
+	
 	if text:
 		text.text = "??"
 	
@@ -26,9 +30,10 @@ func Enter():
 		if HumanInRoom():
 			Transition("Investigate")
 		else:
+			animationPlayer.Run()
 			SetRoomDirection()
+			setMoveDirection.emit(moveDirection)
 	else:
-		pass
 		Transition("Search")
 
 

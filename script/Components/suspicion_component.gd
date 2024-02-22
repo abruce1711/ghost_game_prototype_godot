@@ -5,6 +5,8 @@ class_name SuspicionComponent
 @onready var fearComponent = human.get_node("FearComponent") as FearComponent
 @onready var stateMachine = human.get_node("StateMachine") as StateMachine
 
+@onready var suspicous := false
+
 func _on_sight_component_can_see_power(_fear, power : Power):
 	CanSeePower(power)
 
@@ -16,6 +18,7 @@ func InvestigateNoise(location : Vector3, inSameRoom : bool):
 
 	var state = stateMachine.currentState
 	state.Transitioned.emit(state, "MoveToRoom")
+	suspicous = true
 
 
 func StruckWithObject(object : Node3D):
@@ -24,6 +27,7 @@ func StruckWithObject(object : Node3D):
 
 	var state = stateMachine.currentState
 	state.Transitioned.emit(state, "Investigate")
+	suspicous = true
 
 
 func CanSeePower(power : Power):
@@ -32,3 +36,4 @@ func CanSeePower(power : Power):
 
 	var state = stateMachine.currentState
 	state.Transitioned.emit(state, "CanSeePower")
+	suspicous = true

@@ -2,7 +2,6 @@ extends Node
 class_name SightComponent
 
 @export var rayCast : RayCast3D
-@export var head : Head
 @onready var human = get_parent() as Human
 
 var wallTimer := 0.0

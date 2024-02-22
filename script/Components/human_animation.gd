@@ -1,14 +1,30 @@
-extends Node
+extends AnimationPlayer
 class_name HumanAnimation
 
-@export var player : AnimationPlayer
+func Walk():
+	var suspicionComponent = get_node("../SuspicionComponent") as SuspicionComponent
+	if suspicionComponent.suspicous:
+		self.play(Animations.SuspiciousWalking, 0.5)
+	else :
+		self.play(Animations.SuspiciousWalking, 0.5)
 
+func StopWalking():
+	self.play(Animations.StopWalking, 1)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func TurnLeft():
+	self.play(Animations.TurnLeft)
 
+func TurnRight():
+	self.play(Animations.TurnRight)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func Run():
+	self.play(Animations.Run)
+
+func StopRunning():
+	self.play(Animations.StopRunning)
+
+func LookAround():
+	self.play(Animations.LookAround)
+
+func Shrug():
+	self.play(Animations.Shrug, 0.5)
